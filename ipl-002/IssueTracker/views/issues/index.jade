@@ -1,0 +1,36 @@
+doctype
+html
+  head
+    title=title
+  body
+    h3 Issues
+    form(id='form', method='post', action='/issues/deleteAll')
+      table
+        tr
+          th
+          th Description
+          th Severity
+          th Status
+          th CreatedDate
+          th ResolvedDate
+          th Edit
+          th Delete
+          each item in issues
+            tr
+              td
+                input(type="checkbox", name='ids' value='#{item.id}')
+              td #{item.description}
+              td #{item.severity}
+              td #{item.status}
+              td #{item.createdDate}
+              td #{item.resolvedDate}
+              td
+                a(href='/issues/edit/#{item.id}') Edit
+              td
+                a(href='/issues/delete/#{item.id}') Delete
+      p
+      #menu
+        a(href='/issues/create') Add New Issue
+      p
+      #menu
+        input(type='submit', value='Delete Issues')

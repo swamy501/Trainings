@@ -1,0 +1,69 @@
+Docker
+======
+
+Need of Docker
+-------------
+Compatibility/Dependency
+Long set up time
+Diff Dev/test/prod environments
+
+Docker allows us to deploy each component on seperate environments or seperate compatible systems using Docker containers on same VMs & OS.
+
+-Containerize Applications
+
+Containers
+==========
+completly isolated environments with own network and dependencies but runs on a same OS & Kernel.
+
+DOcker uses Alexis containers.
+
+A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
+
+Commands
+========
+>>docker ps
+  list out containers
+>> docker ps -a
+   all containers including stopped  
+>> docker stop <container name>
+
+>> docker rm <container name>
+   remove container.
+>> docker images
+  List out all images on docker.
+  
+>> docker rmi <image name>
+   To remove an image , before doing that ensure you delete all containers or stop them
+   
+>> docker run nginx;
+
+>> docker pull nginx
+
+>> docker exec <container_name>
+
+Run-Tag
+-=-----
+>> docker run redis:4.0 - running specific version of software. this is called run tag for a partiuclar version.Docker will provide details of available version in documentation website.
+
+STDIN
+-----
+>> docker run -it <container_name>
+  - allows STDIN  OUT .
+  
+Port Maping
+-----------
+>> docker run -p 80:5000 kodekloud/simple-webapp
+
+Volume Mapping
+--------------
+To persist data to local directory use this option.
+>> docker run -v /opt/datadir:/var/lib/mysql mysql - It implictly mounts external directoty into docker container and persists data even if remove container.
+
+Inspect Container
+-----------------
+>>docker inspect <container_name>\
+
+Container Logs
+--------------
+>>docker logs <container_name>
+  

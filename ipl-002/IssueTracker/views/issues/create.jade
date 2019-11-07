@@ -1,0 +1,31 @@
+doctype
+html
+  head
+    title Add New Issue
+  body
+    h4 Issue Details
+    form(id='form', method='post', action='/issues/create')
+      label(for='description') Description
+      input(type='text', id='description', name='description')
+      <br/><br/>
+      label(for='severity') Severity
+      select(id='severity', name='severity')
+        option(value='', selected='selected') Select Severity
+        option(value='Minor') Minor
+        option(value='Major') Major
+        option(value='Critical') Critical
+      <br/><br/>
+      label(for='status') Status
+      select(id='status', name='status')
+        option(value='',selected='selected') Select Status
+        option(value='Open') Open
+        option(value='InProgress') InProgress
+        option(value='Closed') Closed
+      <br/><br/>
+      label(for='createdDate') CreatedDate
+      input(type='text', id='createdDate', name='createdDate')
+      <br/><br/>
+      label(for='resolvedDate') ResolvedDate
+      input(type='text', id='resolvedDate', name='resolvedDate')
+      <br/><br/>
+      input(type='submit', value='Add Issue')

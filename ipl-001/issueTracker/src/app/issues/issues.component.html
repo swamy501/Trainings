@@ -1,0 +1,52 @@
+<div>
+   <h1 class='panel-heading'>
+     {{title}}
+   </h1>
+   <div>
+     <div>
+       <div class='panel-left-control'>
+       </div>
+       <div class='panel-right-search'>
+         <div class='search-text'> Search issue:</div>
+         <div class='search-input'>
+           <input type='text' [(ngModel)] = 'searchFilter'/>
+         </div>
+       </div>
+     </div>
+     <br/>
+     <div>
+       <table border="1" *ngIf='issues && issues.length'>
+         <thead>
+           <tr>
+             <th id='hKey' class='show'>Key</th>
+             <th id='hSummary' class='show'>Summary</th>
+             <th id='hDesc' class='show'>Description</th>
+             <th id='hSeverity' class='show'>Severity</th>
+             <th id='hStatus' class='show'>Status</th>
+             <th id='hCdate' class='show'>CreatedDate</th>
+             <th id='hRdate' class='show'>ResolvedDate</th>
+             <th id='hAssignee' class='show'>Assignee</th>
+             <th id="" style="min-width:20px;"></th>
+             <th id="" style="min-width:20px;"></th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr *ngFor='let issue of issues | issueFilter: searchFilter '>
+             <td id='bKey' class='show'>Issue-{{issue.id}}</td>
+             <td id='bSummary' class='show'>{{issue.summary}}</td>
+             <td id='bDesc' class='show'>{{issue.Description}}</td>
+             <td id='bSeverity' class='show'>{{issue.severity}}</td>
+             <td id='bStatus' class='show'>{{issue.status}}</td>
+             <td id='bCdate' class='show'>{{issue.createdDate}}</td>
+             <td id='bRdate' class='show'>{{issue.resolvedDate}}</td>
+             <td id='bAssignee' class='show'>{{issue.Assignee}}</td>
+             <td><a class='tile' [routerLink]="['/updateIssue',issue.id]">Update </a></td>
+             <td><a class='tile' (click)='deleteIssue(issue.id)'>Delete</a></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <br/>
+      <a routerLink="/addIssue" class="btn btn-xs btn-primary">Add Issue</a>
+   </div>
+</div>

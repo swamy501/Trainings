@@ -1,0 +1,50 @@
+doctype
+html
+  head
+    title Update Existing Issue
+  body
+    h3 Issue Details
+    form(id='form', method='post', action='/issues/edit/#{issue.id}')
+      label(for='isssueid') Issue ID
+      input(type='text', id='id', value='#{issue.id}' readonly)
+      <br/><br/>
+      label(for='description') Description
+      input(type='text', id='description', name='description' value='#{issue.description}')
+      <br/><br/>
+      label(for='severity') Severity
+      select(id='severity', name='severity')
+        if issue.severity == "Minor"
+          option(value='Minor' selected='selected') Minor
+        else
+          option(value='Minor') Minor
+        if issue.severity == "Major"
+          option(value='Major' selected='selected') Major
+        else
+          option(value='Major') Major
+        if issue.severity == "Critical"
+          option(value='Critical' selected='selected') Critical
+        else
+          option(value='Critical') Critical
+      <br/><br/>
+      label(for='status') Status
+      select(id='status', name='status')
+        if issue.status == 'Open'
+          option(value='Open' selected='selected') Open
+        else
+          option(value='Open') Open
+        if issue.status == 'InProgress'
+          option(value='InProgress' selected='selected') InProgress
+        else
+          option(value='InProgress') InProgress
+        if issue.status == 'Closed'
+          option(value='Closed' selected='selected') Closed
+        else
+          option(value='Closed') Closed
+      <br/><br/>
+      label(for='createdDate') CreatedDate
+      input(type='text', id='createdDate', name='createdDate' value='#{issue.createdDate}')
+      <br/><br/>
+      label(for='resolvedDate') ResolvedDate
+      input(type='text', id='resolvedDate', name='resolvedDate' value='#{issue.resolvedDate}')
+      <br/><br/>
+      input(type='submit',value='Update Issue')

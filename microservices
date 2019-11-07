@@ -1,0 +1,183 @@
+Limits service url
+http://localhost:8080/limits
+
+
+Spirng cloud config server
+==========================
+http://localhost:8888/limits-service/dev
+
+In order to get updated configure or git committed properties , we have to refresh application using postman with actuator help.
+Eg: URL : http://localhost:8080/application/refresh
+Spring CLoud Bus:
+================
+In a likely situation that if we have 100s of microservices each having atleast 10 instances, it is not humanly possible to refresh each instance by using Actuator help as above. To address this issue we use Spring Cloud Bus (Kafka, rabbit MQ etc) with one URL refresh it ensures all get refreshed.
+Use below url to refresh in bus to reflect in all instances
+http://localhost:8080/actuator/bus-refresh
+
+
+Currency Exchange Server
+========================
+http://localhost:7000/currency-exchange/from/AUD/to/INR
+
+http://localhost:7001/currency-exchange/from/USD/to/INR
+
+H2 DB console
+http://localhost:7000/h2-console/login.do?jsessionid=ad1d2e40d72666e09f688ce245d41ad4
+
+
+Currency converter using REST Template URL:
+http://localhost:7100/currency-converter/from/AUD/to/INR/quantity/10000
+
+We can use Rest Template to invoke one service in another eg: currency exchange invoked in currency converter. 
+In microservices world it will be tedious to maintain or write code for those calls as they will be very huge in number.
+Optimum solution is using Feign Client.
+
+Feign Rest client
+=================
+Used for invoking other microservices. It rest service client and allows you to create a proxy for service stub in application and avoids lot of burden client code using REST Template.
+
+Currency converter using Feign Client
+http://localhost:7100/currency-converter-feign/from/USD/to/INR/quantity/10000
+
+Steps:
+-----
+Create a proxy Interface for service and declare method of service by using FeignClient annotation Refer: CurrencyExchangeServiceProxy.java
+Controller update code to use FeignClient rather REST template. Refer: CurrencyConversionController.java method convertCurrencyFeign();
+Enable FeignClients in main class Refer: CurrencyConversionServiceApplication.java
+
+Ribbon: Clilent Side Load Balancing 
+===================================
+It used for load balancing client side service calls invoking.
+It distributes the load on a service by cionfiguring in property files.
+
+Steps:
+In addition FeignClient changes , add Ribbon annotation in proxy interface. Refer: CurrencyExchangeServiceProxy.java
+update application properties i.e currency-exchange-service.ribbon.listOfServers=http://localhost:7000,http://localhost:7001
+                                  <servicename>.ribbon.listOfServers = service that running on multiple ports
+								  
+Naming Server - Eureka
+======================
+In order to increase or decrease services instances based up on load on service need to use Naming Server rathern than hardcoding list of Servers using Ribbon load balancing.
+So when one service invokes other services, Naming Server helps in finding it for them.
+It act as a Registry for services.
+
+Setting a Naming Server Eureka
+-----------------------------
+http://localhost:8761/ - Eureka server
+
+After enabling configure each service to resgister in naming server by adding below property,
+eureka.client.service-url.default-zone=http://localhost:8761/eureka
+- Add annotation of @EnableDiscoveryClient at Application Main class. Refer: LimitServiceApplication
+
+After enabling Eureka naming server, remove ribbon related hard coded server list Refer: application.properties of currency-conversion-service.
+
+Ribbon talk to Naming server to invoke service instances.
+
+
+API Gateways: Zuul
+==================
+In world of microservices, it requires a reusable services or components for all services. like authentication, Rate limits of invoking, falut tolerence, Service Aggregation as few business needs a bunch of services together and should be able to provide them through a gateway.
+
+It provides common features like above.
+
+Executing a request through Zuul API Gateway.
+-------------------------------------------
+Invoke currecny conversion service through zuul using below URL,
+
+Zuul server on  - http://localhost:8765/
+http://localhost:8765/{application-name}/{uri}
+http://localhost:8765/currency-conversion-service/currency-converter-feign/from/AUD/to/INR/quantity/10000
+
+Intercepting between service calls using Zuul like Filters.
+Refer: CurrencyExchangeServiceProxy.java and check annotation of using Zuul service class.
+
+Distributed tracing - Spring Cloud Sleuth.
+=========================================
+Centralised location for tracing all service requests and components.
+To debug all decoupled services at one location is called Distributed tracing . Using Spring Cloud Sleuth.
+It assigns an ID to each service to debug in case of issues.
+It will provides log messages associated with request ID to make ease trace of a particular request.
+
+Zipkin Distributed Tracing
+==========================
+
+Centralised logging for multiple applications.
+
+Rabbit MQ used to receive log messeages and Zipkin will pick up from MQ. Zipkin has GUI.
+
+Commands for configuring & running Rabbit MQ & ZipKin.
+
+>>set RABBIT_URI=amqp://localhost
+>>java -jar zipkin-server-2.16.2-exec.jar
+
+//local machine
+
+JAVA_HOME
+C:\Program Files\Java\jdk1.8.0_221
+
+M2_HOME
+D:\apache-maven-3.6.1
+
+Path
+%M2_HOME%\bin
+
+MongoDB Commands
+================
+To start MongoDB server, use command prompt and change directory to <Drive>:\<MongoDB_Home_Folder> 
+
+bin\mongod.exe --dbpath data\db 
+
+To start MongoDB client shell, open new command prompt and change directory to <Drive>:\<MongoDB_Home_Folder>. 
+
+bin\mongo.exe 
+
+
+Cart JSONs:
+===========
+
+
+{
+  "items": [
+  "itemNo":1,
+  "itemName": "Laptop",
+  "itemDescription": "HP i5 8th Gen",
+  "quantity": 1
+  "price": 900
+  ],
+  totalPrice: 900
+}
+
+{
+  "itemNo":2,
+  "itemName": "Laptop",
+  "itemDescription": "Mac Pro",
+  "quantity": 1,
+  "price": 1200
+}
+
+ "_id" : ObjectId("5d69623d9042b364acf97644"),
+        "items" : [
+                {
+                        "itemNo" : 2,
+                        "itemName" : "Laptop",
+                        "itemDescription" : "Mac Pro",
+                        "quantity" : 1,
+                        "price" : "1200"
+                },
+                {
+                        "itemNo" : 2,
+                        "itemName" : "Mobile",
+                        "itemDescription" : "iPhone",
+                        "quantity" : 1,
+                        "price" : "700"
+                }
+        ],
+        "totalPrice" : "900",
+
+
+
+
+
+
+
+

@@ -1,0 +1,52 @@
+<div class="container">
+  <h1> Add Issue </h1>
+  <form #formRef="ngForm" (ngSubmit)="onSubmit(formRef.value)">
+    <div class="form-group">
+      <label for="summary">Summary</label><br/>
+      <input type="text" class="form-control" id="summary" name="summary" [(ngModel)]="summary" #summaryRef="ngModel" size="40">
+      <div *ngIf="summaryRef.invalid && (summaryRef.dirty || summaryRef.touched)">
+        <div *ngIf="summaryRef.errors.required">
+          Summary is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label><br/>
+      <input type="text" class="form-control" id="description" name="description" [(ngModel)]="description" #descriptionRef="ngModel" size="100">
+      <div *ngIf="descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)">
+        <div *ngIf="descriptionRef.errors.required">
+          Description is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="severity">Severity</label>
+      <select class="form-control" name="severity" [ngModel]="severities[0]">
+        <option *ngFor="let severity of severities" [value]="severity">
+          {{severity}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select class="form-control" name="status" [ngModel]="statuses[0]">
+        <option *ngFor="let status of statuses" [value]="status">
+          {{status}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="createdDate">CreatedDate</label>
+      <input type="text" class="form-control" id="createdDate" name="createdDate" [(ngModel)]="createdDate" required #createdDateRef="ngModel"/>
+    </div>
+    <div class="form-group">
+      <label for="resolvedDate">ResolvedDate</label>
+      <input type="text" class="form-control" id="resolvedDate" name="resolvedDate" [(ngModel)]="resolvedDate" required #resolvedDateRef="ngModel"/>
+    </div>
+    <div class="form-group">
+      <label for="assignee">Assignee</label>
+      <input type="text" class="form-control" id="assignee" name="assignee" [(ngModel)]="assignee" required #assigneeRef="ngModel"/>
+    </div>
+      <button type="submit" class="btn btn-info" >Submit</button>
+  </form>
+</div>

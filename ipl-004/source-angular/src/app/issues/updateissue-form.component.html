@@ -1,0 +1,46 @@
+<div class='issue-update'>
+  <h1>Update Issue </h1>
+    <form #formRef="ngForm" (ngSubmit)="onSubmit(formRef.value)">
+      <div class='form-group'>
+        <label for='id'>Issue ID </label>
+        ISSUE-{{issue.id}}
+      </div>
+      <div class="form-group">
+        <label for="summary">Summary</label>
+        <input type="text" class="form-control" id="summary" name="summary" [(ngModel)]="issue.summary" required/>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description" name="description" [(ngModel)]="issue.Description" />
+      </div>
+      <div class="form-group">
+        <label for="severity">Severity</label>
+        <select name="severity" [ngModel]="issue.severity">
+          <option *ngFor="let severity of severities" [value]="severity">
+            {{severity}}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select name="status" [ngModel]="issue.status">
+           <option *ngFor="let status of statuses" [value]="status">
+             {{status}}
+           </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="createdDate">CreatedDate</label>
+        <input type="text" class="form-control" id="createdDate" name="createdDate" [(ngModel)]="issue.createdDate" required/>
+      </div>
+      <div class="form-group">
+        <label for="resolvedDate">ResolvedDate</label>
+        <input type="text" class="form-control" id="resolvedDate" name="resolvedDate" [(ngModel)]="issue.resolvedDate" required/>
+      </div>
+      <div class="form-group">
+        <label for="assignee">Assignee</label>
+        <input type="text" class="form-control" id="assignee" name="assignee" [(ngModel)]="issue.Assignee" required/>
+      </div>
+      <button type="submit" class="btnsbmt">Submit</button>
+    </form>
+</div>

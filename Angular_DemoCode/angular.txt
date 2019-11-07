@@ -1,0 +1,35 @@
+Node JS used as Runtime environment for JS files on local machine.
+Command to Run
+>> node <filename.js>
+  Eg: >> node example.js
+
+Node JS powered by V8 engine from google.
+
+NPM - Node Package Manager
+
+
+>> npm start
+
+Server Vs Client 
+================
+
+
+SPA Vs MPA
+==========
+Single page application Vs Multi Page application
+
+Install Angular CLI
+
+>> npm install –g @angular/cli
+
+Component:
+---------
+Combination of html & ts script. By using event binding & property binding , relate to each other.
+Eg:- app.component.html & app.component.ts 
+
+Command for creating component,
+>>ng g component new-cmp
+
+
+Module:
+======

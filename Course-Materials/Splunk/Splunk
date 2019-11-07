@@ -1,0 +1,13 @@
+Splunk
+======
+Splunk takes data of any report and generate rich reports, to investigate,alert,build dash boards etc.
+
+Splunk is an IT operations tool that consumes machine-data in real time. Most of BI(Business Intelligence) tools do not consume & analyse data in real time.
+
+Deployments
+===========
+Single Deployment 
+Distributed 
+Cloud
+
+Any deployment model consists of Data input, Parsing & INdexing , Searching.
